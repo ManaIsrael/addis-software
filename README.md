@@ -32,6 +32,7 @@ This project is a full-stack application built using the MERN stack (MongoDB, Ex
 - Create new songs.
 - Edit and delete existing songs.
 - Display statistics about songs, artists, albums, and genres.
+- Filtering functionality (e.g., filter by genre).
 
 ## Getting Started
 
