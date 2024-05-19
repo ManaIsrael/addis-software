@@ -42,13 +42,14 @@ const SongList: React.FC = () => {
         <select id="genre" value={selectedGenre ? selectedGenre : ""} onChange={handleGenreChange}>
           <option value="">All Genres</option>
           <option value="Begena">Begena</option>
+          <option value="Hymn">Hymn</option>
           <option value="Krar">Krar</option>
           <option value="Masinko">Masinko</option>
         </select>
       </div>
       {editingSong && <SongForm existingSong={editingSong} onClose={handleFormClose} />}
       <ul>
-        {songs.map((song: Song) => (
+        {filteredSongs.map((song: Song) => (
           <li key={song.id}>
             {song.title} by {song.artist}
             <button onClick={() => handleEdit(song)}>Edit</button>
