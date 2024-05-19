@@ -4,10 +4,12 @@ import { fetchSongs, deleteSong } from '../redux/slices/songSlice';
 import { RootState } from '../redux/store';
 import { Song } from '../types';
 import SongForm from './SongForm';
+import { setGenre } from '../redux/slices/filterSlice';
 
 const SongList: React.FC = () => {
   const dispatch = useDispatch();
   const songs = useSelector((state: RootState) => state.song.songs);
+  const selectedGenre = useSelector((state: RootState) => state.filter.selectedGenre);
   const [editingSong, setEditingSong] = useState<Song | null>(null);
 
   useEffect(() => {
@@ -26,9 +28,24 @@ const SongList: React.FC = () => {
     setEditingSong(null);
   };
 
+  const handleGenreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setGenre(e.target.value));
+  };
+
+  const filteredSongs = selectedGenre ? songs.filter(song => song.genre === selectedGenre) : songs;
+
   return (
     <div>
       <h2>Song List</h2>
+      <div>
+        <label htmlFor="genre">Filter by Genre:</label>
+        <select id="genre" value={selectedGenre ? selectedGenre : ""} onChange={handleGenreChange}>
+          <option value="">All Genres</option>
+          <option value="Begena">Begena</option>
+          <option value="Krar">Krar</option>
+          <option value="Masinko">Masinko</option>
+        </select>
+      </div>
       {editingSong && <SongForm existingSong={editingSong} onClose={handleFormClose} />}
       <ul>
         {songs.map((song: Song) => (
